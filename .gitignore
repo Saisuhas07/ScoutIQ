@@ -9,28 +9,44 @@ venv/
 env/
 ENV/
 
-# Test and tooling caches
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+
+# Test, type-checking, and coverage artifacts
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.tox/
+.nox/
 .coverage
+coverage.xml
 htmlcov/
 
-# Jupyter
+# Jupyter notebooks
 .ipynb_checkpoints/
 
-# Local configuration and secrets
-.env
-.env.*
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Generated data (keep directory placeholders)
-data/raw/*
-!data/raw/.gitkeep
-data/interim/*
-!data/interim/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
 
-# Trained model artifacts (keep directory placeholder)
-models/*
-!models/.gitkeep
+# Local generated artifacts
+*.log
+logs/
+reports/
+tmp/
+temp/
+
+# Local Python build artifacts
+build/
+dist/
+*.egg-info/

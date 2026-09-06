@@ -1,1 +1,0 @@
-"""ScoutIQ Python package."""

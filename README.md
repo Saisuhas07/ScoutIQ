@@ -1,45 +1,51 @@
 # ScoutIQ
 
-## Football Recruitment & Player Intelligence Platform
-
-ScoutIQ is a long-term project to help football clubs identify, assess, and compare potential recruitment targets. It will begin with the Premier League and will be developed iteratively over the coming months.
+### Football Recruitment & Player Intelligence Platform
 
 ## Project Overview
 
-The planned platform will bring together player information, performance history, and market-value data to support better recruitment decisions. In time, it will provide player profiles, requirement-based recommendations, ScoutIQ market-value estimates, similar-player analysis, and tools for finding potentially undervalued players.
+ScoutIQ is a long-term football recruitment intelligence platform designed to help football clubs identify, evaluate, and compare potential players using football data, statistical analysis, and machine learning.
+
+The initial focus will be the Premier League. Over time, ScoutIQ will develop into a decision-support platform that helps recruitment teams turn player data into clearer, more explainable scouting insights.
 
 ## Current Development Stage
 
-**Project initialization only.**
+ScoutIQ is currently at the repository-initialization stage. This project does not yet include data pipelines, player data, machine-learning models, a user interface, API integrations, or a database.
 
-This repository currently contains the initial Python/data-science project layout and documentation. No football data, API integrations, database, user interface, machine-learning model, or recruitment feature has been implemented yet.
+The capabilities below describe the intended direction of the project and are not currently implemented.
 
 ## Planned Capabilities
 
-- Player profiles with football and performance information
-- Historical performance and market-value views
-- ScoutIQ estimated market values
-- Similar-player discovery
-- Recruitment requirements and ranked player recommendations with explanations
-- Analysis to surface potentially undervalued players
-- Scheduled ingestion and updating of football data
+- Search for a specific player and analyse their profile and performance.
+- View current and historical player statistics.
+- Track goals, assists, appearances, and minutes as new football data becomes available.
+- Estimate player market value using a machine-learning model trained on historical data.
+- Find players using recruitment requirements such as position, age, budget, and key attributes.
+- Generate ranked recruitment shortlists.
+- Identify players with similar statistical profiles.
+- Surface potentially undervalued players and hidden gems.
+- Explain why a player was recommended.
+- Expand coverage to four additional major European leagues.
 
-## Initial Technology Stack
+## Initial Technology Direction
 
-- Python
-- A structured data and machine-learning workflow
-- Jupyter notebooks for future exploratory analysis
-- Streamlit for a future initial user interface
+Initial development is expected to use:
 
-Dependencies will be introduced only when a concrete development task requires them.
+- Python for data workflows and application logic.
+- Pandas and NumPy for data preparation and analysis.
+- Scikit-learn and XGBoost for future machine-learning experiments.
+- Streamlit for an initial interactive user interface.
+
+These technologies represent the intended direction; they have not been added or implemented in this repository yet.
 
 ## Long-Term Roadmap
 
-1. Establish data collection, cleaning, and exploratory-analysis workflows for the Premier League.
-2. Develop features and experiments for historical player market-value prediction.
-3. Add player similarity, recruitment ranking, hidden-gem analysis, and explainability.
-4. Build an initial Streamlit interface for the resulting intelligence.
-5. Expand coverage to four additional major European leagues.
-6. Introduce Django later as the project moves toward a production backend, and evaluate a natural-language scouting assistant.
+1. Establish reliable football-data collection and preparation workflows for the Premier League.
+2. Explore player data and develop features for historical market-value analysis.
+3. Build and evaluate market-value prediction, similarity, recruitment-ranking, and hidden-gem approaches.
+4. Present scouting insights through a Streamlit interface.
+5. Expand the platform to additional major European leagues.
+6. Introduce a Django backend as the platform moves toward production use.
+7. Explore a natural-language AI scouting assistant using LangChain.
 
-ScoutIQ is actively developed as a long-term project; this initialization is the starting point, not a completed product.
+ScoutIQ is an actively evolving long-term project. This repository currently contains only its initial documentation foundation.
