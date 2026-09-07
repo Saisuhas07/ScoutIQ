@@ -46,6 +46,10 @@ reports/
 tmp/
 temp/
 
+# Downloaded source artifacts (preserve locally, never commit)
+data/raw/*
+!data/raw/.gitkeep
+
 # Local Python build artifacts
 build/
 dist/
