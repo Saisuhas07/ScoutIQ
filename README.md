@@ -1,51 +1,72 @@
 # ScoutIQ
 
-### Football Recruitment & Player Intelligence Platform
+### Football Recruitment Intelligence & Decision-Support Platform
 
-## Project Overview
+> **Work in progress.** ScoutIQ is under active development. Some capabilities described below are planned, not yet implemented.
 
-ScoutIQ is a long-term football recruitment intelligence platform designed to help football clubs identify, evaluate, and compare potential players using football data, statistical analysis, and machine learning.
+## Purpose
 
-The initial focus will be the Premier League. Over time, ScoutIQ will develop into a decision-support platform that helps recruitment teams turn player data into clearer, more explainable scouting insights.
+ScoutIQ is a football recruitment decision-support platform for recruitment
+analysts, scouts, sporting directors, and technical directors.
 
-## Current Development Stage
+The goal is not simply to predict player market value. Market-value prediction
+is the **foundation** — the first ML component. The ultimate goal is:
 
-ScoutIQ is currently at the repository-initialization stage. This project does not yet include data pipelines, player data, machine-learning models, a user interface, API integrations, or a database.
+> Given a club's recruitment requirements, help analysts and scouts identify,
+> compare, and prioritize players who are good potential recruitment targets,
+> while explaining why each player was recommended and highlighting risks.
 
-The capabilities below describe the intended direction of the project and are not currently implemented.
+ScoutIQ supports human decision-making. It does not claim to replace scouts or
+recruitment analysts, and it never claims to "know who the club should buy."
 
-## Planned Capabilities
+## Current status
 
-- Search for a specific player and analyse their profile and performance.
-- View current and historical player statistics.
-- Track goals, assists, appearances, and minutes as new football data becomes available.
-- Estimate player market value using a machine-learning model trained on historical data.
-- Find players using recruitment requirements such as position, age, budget, and key attributes.
-- Generate ranked recruitment shortlists.
-- Identify players with similar statistical profiles.
-- Surface potentially undervalued players and hidden gems.
-- Explain why a player was recommended.
-- Expand coverage to four additional major European leagues.
+- Historical football data acquired (Transfermarkt datasets), Premier League is
+  the initial focus.
+- Data exploration and understanding complete, documented in
+  `learning_notes/`.
+- A leak-safe temporal ML dataset (`data/processed/pl_valuation_features_v1.csv`)
+  has been built for market-value modelling.
+- The first ML milestone — a market-value regression model — is the current
+  focus. No model exists yet.
 
-## Initial Technology Direction
+## Planned capabilities
 
-Initial development is expected to use:
+- Estimate player market value from historical data (regression).
+- Surface potential value gaps between current and predicted value — a signal
+  worth investigating, not a claim of a "hidden gem."
+- Find players similar to a reference player by playing characteristics.
+- Rank candidates against club-specific recruitment requirements
+  (position, age, budget, playing style).
+- Estimate future development/value potential.
+- Highlight recruitment risks (injuries, small samples, consistency,
+  adaptation, uncertainty).
+- Explain why each player is recommended, including concerns.
+- Generate ranked, explainable recruitment shortlists for human review.
 
-- Python for data workflows and application logic.
-- Pandas and NumPy for data preparation and analysis.
-- Scikit-learn and XGBoost for future machine-learning experiments.
-- Streamlit for an initial interactive user interface.
+## Vision
 
-These technologies represent the intended direction; they have not been added or implemented in this repository yet.
+See [`learning_notes/vision.md`](learning_notes/vision.md) for the full
+intelligence architecture and product principles.
 
-## Long-Term Roadmap
+## Repository layout
 
-1. Establish reliable football-data collection and preparation workflows for the Premier League.
-2. Explore player data and develop features for historical market-value analysis.
-3. Build and evaluate market-value prediction, similarity, recruitment-ranking, and hidden-gem approaches.
-4. Present scouting insights through a Streamlit interface.
-5. Expand the platform to additional major European leagues.
-6. Introduce a Django backend as the platform moves toward production use.
-7. Explore a natural-language AI scouting assistant using LangChain.
+- `data/raw/` — original Transfermarkt datasets (read-only).
+- `data/interim/` — working SQLite copy used for analysis.
+- `data/processed/` — built ML datasets.
+- `src/scoutiq/` — data exploration and ML pipeline scripts.
+- `learning_notes/` — milestone notes and decisions.
 
-ScoutIQ is an actively evolving long-term project. This repository currently contains only its initial documentation foundation.
+## Licensing
+
+The current dataset is used for private learning and prototyping only. A
+public deployment would require licensed data or APIs.
+
+## Roadmap
+
+1. Market-value regression model (current milestone).
+2. Player similarity engine.
+3. Recruitment requirements & fit scoring.
+4. Risk and explainability layers.
+5. Shortlist generation and an initial UI.
+6. Expansion to additional major European leagues and live data.
