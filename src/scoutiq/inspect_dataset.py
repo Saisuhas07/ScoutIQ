@@ -1,4 +1,4 @@
-"""Read-only schema inspection for the Day 2 historical dataset.
+"""Read-only schema inspection for the historical dataset.
 
 This tool deliberately does not clean, join, transform, or model the data.
 """
@@ -77,7 +77,7 @@ def main() -> None:
 
     with duckdb.connect(str(args.database), read_only=True) as connection:
         tables = [row[0] for row in connection.execute("SHOW TABLES").fetchall()]
-        print("Read-only Day 2 dataset inspection")
+        print("Read-only dataset inspection")
         print(f"tables ({len(tables)}): {', '.join(tables)}")
         for table in tables:
             inspect_table(connection, table)

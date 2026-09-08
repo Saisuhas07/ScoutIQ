@@ -197,6 +197,64 @@ Implications:
 - `src/scoutiq/inspect_dataset.py` — schema listing (existing from Day 2
   collection).
 
+## SQLite copy for familiar exploration
+
+The raw artifact is DuckDB, which is a SQL engine we do not need to treat as
+special. To make the exploration code run on a familiar engine, the dataset
+was also copied to SQLite:
+
+- `src/scoutiq/export_to_sqlite.py` — copies the DuckDB file (read-only) into
+  `data/interim/transfermarkt_datasets/transfermarkt.sqlite`.
+  All 13 tables copy in; row counts are verified to match exactly.
+- `src/scoutiq/explore_dataset_sqlite.py` — the same six-question deep-dive,
+  written with `sqlite3` and portable SQL.
+- The SQLite copy is a large generated file (716 MB) and is git-ignored;
+  regenerate it any time with: `python src/scoutiq/export_to_sqlite.py`.
+
+### SQL dialects, honestly
+
+Nearly all the SQL is standard and runs on DuckDB, SQLite, MySQL and
+PostgreSQL alike. The few differences we hit:
+
+| DuckDB | SQLite | Why |
+| --- | --- | --- |
+| `EXTRACT(YEAR FROM date)` | `strftime('%Y', date)` | each engine has its own date functions |
+| `DATEDIFF('year', a, b)` | `(julianday(b) - julianday(a)) / 365.25` | DuckDB has a built-in; SQLite works with day arithmetic |
+| `MEDIAN(x)` | no equivalent | compute the median in pandas |
+| `FILTER (WHERE ...)` | `SUM(CASE WHEN ... THEN 1 ELSE 0 END)` | DuckDB-specific syntax; CASE WHEN is everywhere |
+
+The lesson: learn standard SQL first (SELECT/JOIN/GROUP BY), and expect a tiny
+layer of engine-specific functions around it. That is normal in industry;
+teams pick one engine and learn its small dialect on top of standard SQL.
+
+### Files changed for the SQLite work
+
+- Added `src/scoutiq/export_to_sqlite.py`
+- Added `src/scoutiq/explore_dataset_sqlite.py`
+- Added `data/interim/transfermarkt_datasets/transfermarkt.sqlite` (git-ignored)
+- Added a gitignore rule for the SQLite copy
+- `src/scoutiq/explore_dataset.py` and `src/scoutiq/inspect_dataset.py`:
+  removed day-number wording so the code is self-contained and reusable
+
+## Temporal alignment: the candidate ML dataset
+
+The next stage after understanding the schema was building the training-data
+shape — proving the leak-free join actually works. This is documented fully in
+`learning_notes/day3_ml_dataset.md`.
+
+Quick summary for continuity:
+
+- `src/scoutiq/build_temporal_dataset.py` builds one row per PL valuation,
+  with performance features only from appearances strictly BEFORE the
+  valuation date.
+- Verification: 33,748 rows; leakage check PASSES (0 rows use a future match).
+- Coverage reality: ~13,167 of the 33,748 rows (39%) have any prior PL
+  appearance. Pre-2012 valuations have none (appearances start 2012); from
+  2017 onward, ~44-78% of rows carry prior performance. Restricting the
+  model to rows with prior performance (and likely 2017+) is the realistic
+  training pool.
+- Output: `data/processed/pl_valuation_features_v1.csv`
+
 ## Files changed this session
 
 - Added `src/scoutiq/explore_dataset.py`
@@ -204,7 +262,7 @@ Implications:
 
 ## Next logical milestone
 
-Build an explicit, documented **temporal alignment** between appearances and
-valuations (features available at each valuation date) — still as a data-
-understanding exercise, before any modelling. Then decide the target
-representation (raw vs log) and the train/validation/test split strategy.
+Decide the target representation (raw vs log euros) and the
+train/validation/test split strategy (temporal) on the candidate ML dataset,
+then train a Linear Regression baseline as explainability for the whole
+pipeline.

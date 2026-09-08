@@ -46,6 +46,9 @@ reports/
 tmp/
 temp/
 
+# Converted local database copies (regenerated from data/raw with export_to_sqlite.py)
+data/interim/transfermarkt_datasets/*.sqlite
+
 # Local Python build artifacts
 build/
 dist/
